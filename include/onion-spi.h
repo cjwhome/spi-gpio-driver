@@ -16,10 +16,18 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <errno.h>
+#include <stdarg.h>
 
+//#include <onion-debug.h>
+#define ONION_SEVERITY_FATAL                    (-1)
+#define ONION_SEVERITY_INFO                             (0)
+#define ONION_SEVERITY_DEBUG                    (1)
+#define ONION_SEVERITY_DEBUG_EXTRA              (2)
 
-#include <onion-debug.h>
-
+#define ONION_VERBOSITY_NONE                    (ONION_SEVERITY_FATAL)
+#define ONION_VERBOSITY_NORMAL                  (ONION_SEVERITY_INFO)
+#define ONION_VERBOSITY_VERBOSE                 (ONION_SEVERITY_DEBUG)
+#define ONION_VERBOSITY_EXTRA_VERBOSE   (ONION_SEVERITY_DEBUG_EXTRA)
 
 #define SPI_DEV_PATH				"/dev/spidev%d.%d"
 #define SPI_PRINT_BANNER			"onion-spi::"
@@ -30,7 +38,7 @@
 
 #define SPI_DEFAULT_SPEED			100000
 #define SPI_DEFAULT_BITS_PER_WORD	0 				// corresponds to 8 bits per word
-#define SPI_DEFAULT_MODE 			SPI_MODE_0
+#define SPI_DEFAULT_MODE 	 SPI_MODE_0
 #define SPI_DEFAULT_MODE_BITS		(SPI_MODE_0 | SPI_TX_DUAL | SPI_RX_DUAL)
 
 #define SPI_DEFAULT_GPIO_SCK		6
@@ -93,4 +101,25 @@ int 	spiRead					(struct spiParams *params, int addr, uint8_t *rdBuffer, int byt
 #ifdef __cplusplus
 }
 #endif 
+
+//from onion-debug.h
+#ifdef __cplusplus
+extern "C" {
+#endif 
+
+#ifdef __cplusplus
+extern 
+#endif 
+int     onionVerbosityLevel;
+
+// debug functions
+void    onionSetVerbosity               (int verbosityLevel);
+int     onionGetVerbosity               ();
+
+void    onionPrint                      (int severity, const char* msg, ...);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif // _ONION_SPI_H_ 

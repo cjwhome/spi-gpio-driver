@@ -27,35 +27,35 @@ LIB0 := libonionspi
 SOURCE_LIB0 := src/onion-spi.$(SRCEXT)
 OBJECT_LIB0 := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCE_LIB0:.$(SRCEXT)=.o))
 TARGET_LIB0 := $(LIBDIR)/$(LIB0).so
-LIB_LIB0 := -L$(LIBDIR) -loniondebug
+LIB_LIB0 := -L$(LIBDIR) 
 
 APP0 := spi-tool
 SOURCE_APP0 := $(SRCDIR)/main-$(APP0).$(SRCEXT)
 OBJECT_APP0 := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCE_APP0:.$(SRCEXT)=.o))
-LIB_APP0 := -L$(LIBDIR) -loniondebug -lonionspi
+LIB_APP0 := -L$(LIBDIR) -lonionspi
 TARGET_APP0 := $(BINDIR)/$(APP0)
 
-PYLIB0 := onionSpi
-SOURCE_PYLIB0 := src/python/python-onion-spi.c
-OBJECT_PYLIB0 := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCE_PYLIB0:.$(SRCEXT)=.o))
-TARGET_PYLIB0 := $(PYLIBDIR)/$(PYLIB0).so
-LIB_PYLIB0 := -L$(LIBDIR) -loniondebug -lonionspi -lpython2.7
+#PYLIB0 := onionSpi
+#SOURCE_PYLIB0 := src/python/python-onion-spi.c
+#OBJECT_PYLIB0 := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCE_PYLIB0:.$(SRCEXT)=.o))
+#TARGET_PYLIB0 := $(PYLIBDIR)/$(PYLIB0).so
+#LIB_PYLIB0 := -L$(LIBDIR) -loniondebug -lonionspi -lpython2.7
 
 
-all: info $(TARGET_LIB0) $(TARGET_APP0) $(TARGET_PYLIB0)
+all: info $(TARGET_LIB0) $(TARGET_APP0) #$(TARGET_PYLIB0)
 
 
 # libraries
 $(TARGET_LIB0): $(OBJECT_LIB0)
 	@echo " Compiling $@"
 	@mkdir -p $(LIBDIR)
-	$(CC) -shared -o $@  $^ $(LIB_LIB0)
+	$(CC) -fPIC -shared -o $@  $^ $(LIB_LIB0)
 
 # python libraries
-$(TARGET_PYLIB0): $(OBJECT_PYLIB0)
-	@echo " Compiling $@"
-	@mkdir -p $(PYLIBDIR)
-	$(CC) -shared -o $@  $^ $(LIB_PYLIB0)
+#$(TARGET_PYLIB0): $(OBJECT_PYLIB0)
+#	@echo " Compiling $@"
+#	@mkdir -p $(PYLIBDIR)
+#	$(CC) -shared -o $@  $^ $(LIB_PYLIB0)
 
 # application binaries
 $(TARGET_APP0): $(OBJECT_APP0)

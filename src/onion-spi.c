@@ -8,6 +8,27 @@ int 	_spiRegisterDevice 		(int printSeverity, struct spiParams *params);
 
 static void hex_dump(const void *src, size_t length, size_t line_size, char *prefix);
 
+//onion-debug functions
+void onionSetVerbosity (int verbosityLevel)
+{
+        onionVerbosityLevel     = verbosityLevel;
+}
+
+int onionGetVerbosity ()
+{
+        return (onionVerbosityLevel);
+}
+
+void onionPrint (int severity, const char* msg, ...)
+{
+        va_list         argptr; 
+
+        if (onionVerbosityLevel >= severity) {
+                va_start(argptr, msg);
+                vprintf(msg, argptr);
+                va_end(argptr);
+        }
+}
 
 //// spi functions
 // initialize the parameter structure

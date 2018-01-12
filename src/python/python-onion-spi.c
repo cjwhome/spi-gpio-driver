@@ -220,7 +220,7 @@ onionSpi_writeBytes(OnionSpiObject *self, PyObject *args)
 			if (PyLong_Check(val)) {
 				txBuffer[i+1] = (uint8_t)PyLong_AS_LONG(val);
 			} else {
-				snprintf(wrmsg_text, sizeof (wrmsg_text) - 1, wrmsg_val, val);
+				//snprintf(wrmsg_text, sizeof (wrmsg_text) - 1, wrmsg_val, val);
 				PyErr_SetString(PyExc_TypeError, wrmsg_text);
 				return NULL;
 			}
@@ -287,7 +287,7 @@ onionSpi_write(OnionSpiObject *self, PyObject *args)
 			if (PyLong_Check(val)) {
 				txBuffer[i] = (uint8_t)PyLong_AS_LONG(val);
 			} else {
-				snprintf(wrmsg_text, sizeof (wrmsg_text) - 1, wrmsg_val, val);
+				//snprintf(wrmsg_text, sizeof (wrmsg_text) - 1, wrmsg_val, val);
 				PyErr_SetString(PyExc_TypeError, wrmsg_text);
 				return NULL;
 			}
